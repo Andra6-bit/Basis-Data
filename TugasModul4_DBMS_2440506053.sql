@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: MAHASISWA
+-- Host: localhost    Database: DATA_KULIAH
 -- ------------------------------------------------------
 -- Server version	10.4.32-MariaDB
 
@@ -16,31 +16,82 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `datamahasiswa`
+-- Table structure for table `mahasiswa`
 --
 
-DROP TABLE IF EXISTS `datamahasiswa`;
+DROP TABLE IF EXISTS `mahasiswa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `datamahasiswa` (
-  `NPM` char(5) NOT NULL,
-  `Nama` varchar(25) NOT NULL,
-  `Tempat_Lahir` varchar(30) NOT NULL,
-  `Tanggal_Lahir` date NOT NULL,
-  `Jenis_Kelamin` enum('L','P') NOT NULL,
-  `No_Hp` varchar(25) NOT NULL,
-  PRIMARY KEY (`NPM`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `mahasiswa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) DEFAULT NULL,
+  `jurusan` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `datamahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
-LOCK TABLES `datamahasiswa` WRITE;
-/*!40000 ALTER TABLE `datamahasiswa` DISABLE KEYS */;
-INSERT INTO `datamahasiswa` VALUES ('12345','Muhammad Andra Firdaus','Sleman','2006-02-06','L','081246933959'),('12347','Hanif Abdilah','Magelang','2006-10-06','L','088213442111'),('12348','Ahmada Nur Maulana','Magelang','2006-01-10','L','081213453121'),('12349','Bagus Muhammad Muslim','Malang','2006-02-12','L','085223453120');
-/*!40000 ALTER TABLE `datamahasiswa` ENABLE KEYS */;
+LOCK TABLES `mahasiswa` WRITE;
+/*!40000 ALTER TABLE `mahasiswa` DISABLE KEYS */;
+INSERT INTO `mahasiswa` VALUES (1,'Andi','Informatika'),(2,'Budi','Informatika'),(3,'Citra','Manajemen'),(4,'Dewi','Manajemen'),(5,'Eko','Teknik Elektro');
+/*!40000 ALTER TABLE `mahasiswa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mata_kuliah`
+--
+
+DROP TABLE IF EXISTS `mata_kuliah`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mata_kuliah` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_mk` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mata_kuliah`
+--
+
+LOCK TABLES `mata_kuliah` WRITE;
+/*!40000 ALTER TABLE `mata_kuliah` DISABLE KEYS */;
+INSERT INTO `mata_kuliah` VALUES (1,'Basis Data'),(2,'Algoritma'),(3,'Ekonomi Makro'),(4,'Statistik Bisnis'),(5,'Rangkaian Listrik');
+/*!40000 ALTER TABLE `mata_kuliah` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nilai`
+--
+
+DROP TABLE IF EXISTS `nilai`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nilai` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mahasiswa_id` int(11) DEFAULT NULL,
+  `mata_kuliah_id` int(11) DEFAULT NULL,
+  `nilai` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mahasiswa_id` (`mahasiswa_id`),
+  KEY `mata_kuliah_id` (`mata_kuliah_id`),
+  CONSTRAINT `nilai_ibfk_1` FOREIGN KEY (`mahasiswa_id`) REFERENCES `mahasiswa` (`id`),
+  CONSTRAINT `nilai_ibfk_2` FOREIGN KEY (`mata_kuliah_id`) REFERENCES `mata_kuliah` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nilai`
+--
+
+LOCK TABLES `nilai` WRITE;
+/*!40000 ALTER TABLE `nilai` DISABLE KEYS */;
+INSERT INTO `nilai` VALUES (1,1,1,85),(2,1,2,90),(3,2,1,78),(4,2,2,88),(5,3,3,92),(6,3,4,87),(7,4,3,80),(8,4,4,85),(9,5,5,89),(10,5,2,91);
+/*!40000 ALTER TABLE `nilai` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-27  8:32:34
+-- Dump completed on 2025-03-12  8:03:16
